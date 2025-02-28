@@ -1,0 +1,24 @@
+[package]
+name = "test-utils"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["lib"]
+name = "test_utils"
+
+[dependencies]
+solana-program-test = { workspace = true }
+s-program-sdk = { workspace = true }
+s-controller = { workspace = true }
+s-controller-lib = { workspace = true }
+flat-fee = { workspace = true }
+flat-fee-lib = { workspace = true }
+spl-calculator = { workspace = true }
+spl-calculator-lib = { workspace = true }
+marinade-calculator = { workspace = true }
+marinade-calculator-lib = { workspace = true }
+lido-calculator = { workspace = true }
+lido-calculator-lib = { workspace = true }
+
+cargo_metadata = "0.19.1"

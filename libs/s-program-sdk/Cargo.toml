@@ -1,0 +1,15 @@
+[package]
+name = "s-program-sdk"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["lib"]
+name = "s_program_sdk"
+
+[dependencies]
+solana-program = { workspace = true }
+
+[dev-dependencies]
+tokio = { version = "1.40.0", features = ["rt-multi-thread", "macros"] }
+test-utils = { path = "../../test-utils" }
