@@ -6,6 +6,7 @@ pub trait MarinadeCalculatorProgramTest {
 
 impl MarinadeCalculatorProgramTest for ProgramTest {
     fn add_marinade_calculator_program(mut self) -> Self {
+        self.prefer_bpf(false);
         self.add_program(
             "marinade_calculator",
             marinade_calculator_lib::program::ID,

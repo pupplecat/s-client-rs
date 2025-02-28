@@ -6,6 +6,7 @@ pub trait SplCalculatorProgramTest {
 
 impl SplCalculatorProgramTest for ProgramTest {
     fn add_spl_calculator_program(mut self) -> Self {
+        self.prefer_bpf(false);
         self.add_program(
             "spl_calculator",
             spl_calculator_lib::program::ID,

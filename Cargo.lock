@@ -5722,12 +5722,15 @@ dependencies = [
  "lido-calculator-lib",
  "marinade-calculator",
  "marinade-calculator-lib",
+ "program-simulator",
  "s-controller",
  "s-controller-lib",
- "s-program-sdk",
+ "s_controller_interface",
  "solana-program-test",
+ "solana-sdk",
  "spl-calculator",
  "spl-calculator-lib",
+ "spl-token",
 ]
 
 [[package]]

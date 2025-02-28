@@ -6,6 +6,7 @@ pub trait LidoCalculatorProgramTest {
 
 impl LidoCalculatorProgramTest for ProgramTest {
     fn add_lido_calculator_program(mut self) -> Self {
+        self.prefer_bpf(false);
         self.add_program(
             "lido_calculator",
             lido_calculator_lib::program::ID,

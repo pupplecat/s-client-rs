@@ -6,6 +6,7 @@ pub trait SControllerProgramTest {
 
 impl SControllerProgramTest for ProgramTest {
     fn add_s_controller_program(mut self) -> Self {
+        self.prefer_bpf(false);
         self.add_program(
             "s_controller",
             s_controller_lib::program::ID,

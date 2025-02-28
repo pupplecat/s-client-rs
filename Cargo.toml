@@ -56,9 +56,11 @@ solana-sdk = ">=1, <2"
 solana-transaction-status = ">=1, <2"
 solana-banks-interface = ">=1, <2"
 
+program-simulator = { path = "./program-simulator" }
 s-program-sdk = { path = "./libs/s-program-sdk" }
 s-controller = { git = "https://github.com/moose-labs/S", branch = "custom_address" }
 s-controller-lib = { git = "https://github.com/moose-labs/S", branch = "custom_address" }
+s_controller_interface = { git = "https://github.com/moose-labs/S", branch = "custom_address" }
 flat-fee = { git = "https://github.com/moose-labs/S", branch = "custom_address" }
 flat-fee-lib = { git = "https://github.com/moose-labs/S", branch = "custom_address" }
 spl-calculator = { git = "https://github.com/moose-labs/S", branch = "custom_address" }

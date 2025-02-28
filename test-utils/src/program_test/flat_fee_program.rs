@@ -6,6 +6,7 @@ pub trait FlatFeeProgramTest {
 
 impl FlatFeeProgramTest for ProgramTest {
     fn add_flat_fee_program(mut self) -> Self {
+        self.prefer_bpf(false);
         self.add_program(
             "flat_fee",
             flat_fee_lib::program::ID,
