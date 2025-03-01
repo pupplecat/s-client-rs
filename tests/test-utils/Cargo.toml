@@ -26,3 +26,4 @@ lido-calculator = { workspace = true }
 lido-calculator-lib = { workspace = true }
 
 cargo_metadata = "0.19.1"
+async-trait = { workspace = true }

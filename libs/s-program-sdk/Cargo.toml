@@ -13,3 +13,4 @@ solana-program = { workspace = true }
 [dev-dependencies]
 tokio = { version = "1.40.0", features = ["rt-multi-thread", "macros"] }
 test-utils = { workspace = true}
+solana-sdk = { workspace = true }

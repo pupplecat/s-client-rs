@@ -1,3 +1,4 @@
+use borsh::BorshDeserialize;
 use solana_banks_interface::{BanksTransactionResultWithSimulation, TransactionStatus};
 use solana_program::program_pack::Pack;
 use solana_program_test::{
@@ -169,6 +170,21 @@ impl ProgramSimulator {
             .ok_or_else(|| BanksClientError::ClientError("Account not found"))?;
 
         T::unpack(&account.data[..]).map_err(|_err| BanksClientError::ClientError("Unpack error"))
+    }
+
+    pub async fn get_borsh_account_data<T: BorshDeserialize>(
+        &mut self,
+        pubkey: Pubkey,
+    ) -> Result<T, BanksClientError> {
+        let account = self
+            .program_test_context
+            .banks_client
+            .get_account(pubkey)
+            .await
+            .unwrap()
+            .unwrap();
+
+        Ok(T::deserialize(&mut &account.data[..])?)
     }
 
     pub async fn get_balance(&mut self, pubkey: Pubkey) -> Result<u64, BanksClientError> {

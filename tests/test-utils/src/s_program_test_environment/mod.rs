@@ -1,4 +1,9 @@
-use s_controller_interface::{initialize_ix, InitializeKeys};
+mod initialize;
+mod set_admin;
+
+pub use initialize::*;
+
+use s_controller_interface::{LstState, PoolState};
 use solana_program_test::BanksClientError;
 use std::sync::{Arc, Mutex};
 
@@ -8,10 +13,9 @@ use solana_sdk::{
     pubkey::Pubkey,
     signature::{read_keypair_file, Keypair, Signature},
     signer::Signer,
-    system_program,
 };
 
-use crate::{utils::resolve_path, ProgramTestFixtures};
+use crate::{utils::test_fixtures_dir, ProgramTestFixtures};
 
 pub struct SProgramTestEnvironment {
     pub test_fixtures: Arc<Mutex<ProgramTestFixtures>>,
@@ -20,22 +24,6 @@ pub struct SProgramTestEnvironment {
 }
 
 impl SProgramTestEnvironment {
-    pub async fn initialize(&mut self) -> Result<(), Box<dyn std::error::Error>> {
-        let initialize_instruction = initialize_ix(InitializeKeys {
-            payer: self.authority.pubkey(),
-            authority: self.authority.pubkey(),
-            pool_state: self.get_pool_state_pubkey(),
-            lp_token_mint: self.lp_mint,
-            lp_token_program: spl_token::ID,
-            system_program: system_program::ID,
-        })?;
-
-        self.process_instruction(initialize_instruction, &vec![&self.authority], None)
-            .await?;
-
-        Ok(())
-    }
-
     pub async fn process_instructions(
         &self,
         instructions: &[Instruction],
@@ -61,6 +49,26 @@ impl SProgramTestEnvironment {
             .await
     }
 
+    pub async fn get_pool_state(&self) -> Result<PoolState, Box<dyn std::error::Error>> {
+        let mut test_fixtures = self.test_fixtures.lock().unwrap();
+        let token_account = test_fixtures
+            .program_simulator
+            .get_borsh_account_data(self.get_pool_state_pubkey())
+            .await?;
+
+        Ok(token_account)
+    }
+
+    pub async fn get_lst_state(&self) -> Result<LstState, Box<dyn std::error::Error>> {
+        let mut test_fixtures = self.test_fixtures.lock().unwrap();
+        let token_account = test_fixtures
+            .program_simulator
+            .get_borsh_account_data(self.get_pool_state_pubkey())
+            .await?;
+
+        Ok(token_account)
+    }
+
     pub fn get_program_id(&self) -> Pubkey {
         s_controller_lib::program::ID
     }
@@ -73,10 +81,9 @@ impl SProgramTestEnvironment {
 pub async fn setup_s_program_test_environment() -> SProgramTestEnvironment {
     let mut test_fixtures = ProgramTestFixtures::setup_test_fixtures().await;
 
-    let authority = read_keypair_file(resolve_path(
-        "test-fixtures/s-controller-test-authority-key.json",
-    ))
-    .unwrap();
+    let authority =
+        read_keypair_file(test_fixtures_dir().join("s-controller-test-initial-authority-key.json"))
+            .unwrap();
 
     test_fixtures
         .program_simulator

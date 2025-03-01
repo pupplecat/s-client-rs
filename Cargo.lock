@@ -3592,6 +3592,7 @@ name = "s-program-sdk"
 version = "0.1.0"
 dependencies = [
  "solana-program",
+ "solana-sdk",
  "test-utils",
  "tokio",
 ]
@@ -5715,6 +5716,7 @@ dependencies = [
 name = "test-utils"
 version = "0.1.0"
 dependencies = [
+ "async-trait",
  "cargo_metadata",
  "flat-fee",
  "flat-fee-lib",
