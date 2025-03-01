@@ -12,4 +12,4 @@ solana-program = { workspace = true }
 
 [dev-dependencies]
 tokio = { version = "1.40.0", features = ["rt-multi-thread", "macros"] }
-test-utils = { path = "../../test-utils" }
+test-utils = { workspace = true}
