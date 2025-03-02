@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod setup {
     use solana_sdk::signer::Signer;
-    use test_utils::{setup_s_program_test_environment, SProgramInitialize, TestResult};
+    use test_utils::{setup_s_program_test_environment, TestResult};
 
     #[tokio::test]
     async fn test_setup() -> TestResult {

@@ -1,7 +1,15 @@
 mod initialize;
 mod set_admin;
+mod set_pricing_program;
+mod set_protocol_fee;
+mod set_protocol_fee_beneficiary;
+mod set_rebalance_authority;
+mod set_sol_value_calculator;
 
 pub use initialize::*;
+pub use set_admin::*;
+pub use set_pricing_program::*;
+pub use set_protocol_fee_beneficiary::*;
 
 use s_controller_interface::{LstState, PoolState};
 use solana_program_test::BanksClientError;
@@ -20,6 +28,7 @@ use crate::{utils::test_fixtures_dir, ProgramTestFixtures};
 pub struct SProgramTestEnvironment {
     pub test_fixtures: Arc<Mutex<ProgramTestFixtures>>,
     pub authority: Keypair,
+    pub rebalance_authority: Keypair,
     pub lp_mint: Pubkey,
 }
 
@@ -59,7 +68,7 @@ impl SProgramTestEnvironment {
         Ok(token_account)
     }
 
-    pub async fn get_lst_state(&self) -> Result<LstState, Box<dyn std::error::Error>> {
+    pub async fn get_lst_state_list(&self) -> Result<&[LstState], Box<dyn std::error::Error>> {
         let mut test_fixtures = self.test_fixtures.lock().unwrap();
         let token_account = test_fixtures
             .program_simulator
@@ -69,12 +78,26 @@ impl SProgramTestEnvironment {
         Ok(token_account)
     }
 
+    // pub async fn get_lst_state(&self) -> Result<LstState, Box<dyn std::error::Error>> {
+    //     let mut test_fixtures = self.test_fixtures.lock().unwrap();
+    //     let token_account = test_fixtures
+    //         .program_simulator
+    //         .get_borsh_account_data(self.get_lst_state_list_pubkey())
+    //         .await?;
+
+    //     Ok(token_account)
+    // }
+
     pub fn get_program_id(&self) -> Pubkey {
         s_controller_lib::program::ID
     }
 
     pub fn get_pool_state_pubkey(&self) -> Pubkey {
         s_controller_lib::program::POOL_STATE_ID
+    }
+
+    pub fn get_lst_state_list_pubkey(&self) -> Pubkey {
+        s_controller_lib::program::LST_STATE_LIST_ID
     }
 }
 
@@ -98,7 +121,8 @@ pub async fn setup_s_program_test_environment() -> SProgramTestEnvironment {
 
     SProgramTestEnvironment {
         test_fixtures: Arc::new(Mutex::new(test_fixtures)),
-        authority,
+        authority: authority.insecure_clone(),
+        rebalance_authority: authority.insecure_clone(),
         lp_mint,
     }
 }

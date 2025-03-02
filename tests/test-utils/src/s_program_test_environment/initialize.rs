@@ -5,12 +5,8 @@ use crate::TestResult;
 
 use super::SProgramTestEnvironment;
 
-pub trait SProgramInitialize {
-    async fn initialize(&mut self) -> TestResult;
-}
-
-impl SProgramInitialize for SProgramTestEnvironment {
-    async fn initialize(&mut self) -> TestResult {
+impl SProgramTestEnvironment {
+    pub async fn initialize(&mut self) -> TestResult {
         let authority = self.authority.pubkey();
         let initialize_instruction = initialize_ix(InitializeKeys {
             payer: self.authority.pubkey(),
