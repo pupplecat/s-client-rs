@@ -5,6 +5,7 @@ use solana_program_test::{
     BanksClientError, ProgramTest, ProgramTestBanksClientExt, ProgramTestContext,
 };
 use solana_sdk::{
+    account::Account,
     clock::Clock,
     compute_budget,
     genesis_config::GenesisConfig,
@@ -155,6 +156,19 @@ impl ProgramSimulator {
         let keypair = Keypair::new();
         self.airdrop(&keypair.pubkey(), LAMPORTS_PER_SOL).await?;
         Ok(keypair)
+    }
+
+    pub async fn get_account(
+        &mut self,
+        pubkey: Pubkey,
+    ) -> Result<Option<Account>, BanksClientError> {
+        let account = self
+            .program_test_context
+            .banks_client
+            .get_account(pubkey)
+            .await?;
+
+        Ok(account)
     }
 
     pub async fn get_packed_account_data<T: Pack + IsInitialized>(

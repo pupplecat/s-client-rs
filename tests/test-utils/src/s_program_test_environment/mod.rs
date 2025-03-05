@@ -1,3 +1,6 @@
+mod add_disable_pool_authority;
+mod add_liquidity;
+mod add_lst;
 mod initialize;
 mod set_admin;
 mod set_pricing_program;
@@ -13,6 +16,7 @@ pub use set_protocol_fee_beneficiary::*;
 
 use s_controller_interface::{LstState, PoolState};
 use solana_program_test::BanksClientError;
+use spl_token::state::Mint;
 use std::sync::{Arc, Mutex};
 
 use solana_sdk::{
@@ -68,15 +72,42 @@ impl SProgramTestEnvironment {
         Ok(token_account)
     }
 
-    pub async fn get_lst_state_list(&self) -> Result<&[LstState], Box<dyn std::error::Error>> {
+    pub async fn get_mint_account(
+        &self,
+        mint_pubkey: Pubkey,
+    ) -> Result<Mint, Box<dyn std::error::Error>> {
         let mut test_fixtures = self.test_fixtures.lock().unwrap();
-        let token_account = test_fixtures
+        let mint = test_fixtures
             .program_simulator
-            .get_borsh_account_data(self.get_pool_state_pubkey())
+            .get_packed_account_data(mint_pubkey)
             .await?;
 
-        Ok(token_account)
+        Ok(mint)
     }
+
+    pub async fn get_mint_token_program(
+        &self,
+        mint_pubkey: Pubkey,
+    ) -> Result<Pubkey, Box<dyn std::error::Error>> {
+        let mut test_fixtures = self.test_fixtures.lock().unwrap();
+        let mint = test_fixtures
+            .program_simulator
+            .get_account(mint_pubkey)
+            .await?
+            .unwrap();
+
+        Ok(mint.owner)
+    }
+
+    // pub async fn get_lst_state_list(&self) -> Result<&[LstState], Box<dyn std::error::Error>> {
+    //     let mut test_fixtures = self.test_fixtures.lock().unwrap();
+    //     let token_account = test_fixtures
+    //         .program_simulator
+    //         .get_borsh_account_data(self.get_pool_state_pubkey())
+    //         .await?;
+
+    //     Ok(token_account)
+    // }
 
     // pub async fn get_lst_state(&self) -> Result<LstState, Box<dyn std::error::Error>> {
     //     let mut test_fixtures = self.test_fixtures.lock().unwrap();
@@ -98,6 +129,10 @@ impl SProgramTestEnvironment {
 
     pub fn get_lst_state_list_pubkey(&self) -> Pubkey {
         s_controller_lib::program::LST_STATE_LIST_ID
+    }
+
+    pub fn get_disable_pool_authority_list_pubkey(&self) -> Pubkey {
+        s_controller_lib::program::DISABLE_POOL_AUTHORITY_LIST_ID
     }
 }
 

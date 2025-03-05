@@ -12,6 +12,7 @@ solana-program-test = { workspace = true }
 program-simulator = { workspace = true }
 solana-sdk = { workspace = true }
 spl-token = { workspace = true }
+spl-associated-token-account = { workspace = true }
 
 s-controller = { workspace = true }
 s-controller-lib = { workspace = true, features = ["testing"] }

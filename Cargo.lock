@@ -5730,6 +5730,7 @@ dependencies = [
  "s_controller_interface",
  "solana-program-test",
  "solana-sdk",
+ "spl-associated-token-account",
  "spl-calculator",
  "spl-calculator-lib",
  "spl-token",
