@@ -1,5 +1,5 @@
 #[cfg(test)]
-mod test_initialize {
+mod test_add_lst {
     use solana_sdk::signer::Signer;
     use test_utils::{setup_s_program_test_environment, TestResult};
 
@@ -8,6 +8,8 @@ mod test_initialize {
         let mut env = setup_s_program_test_environment().await;
 
         env.initialize().await?;
+
+        // env.add_lst(lst_mint_pubkey, sol_value_calculator_pubkey);
 
         let pool_state = env.get_pool_state().await?;
 

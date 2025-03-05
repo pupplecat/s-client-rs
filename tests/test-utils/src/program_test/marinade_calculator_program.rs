@@ -2,6 +2,10 @@ use solana_program_test::{processor, ProgramTest};
 
 pub trait MarinadeCalculatorProgramTest {
     fn add_marinade_calculator_program(self) -> Self;
+
+    fn add_marinade_prog(self) -> Self;
+
+    fn add_marinade_stake_pool(self) -> Self;
 }
 
 impl MarinadeCalculatorProgramTest for ProgramTest {
@@ -13,5 +17,13 @@ impl MarinadeCalculatorProgramTest for ProgramTest {
             processor!(marinade_calculator::entrypoint::process_instruction),
         );
         self
+    }
+
+    fn add_marinade_prog(self) -> Self {
+        todo!()
+    }
+
+    fn add_marinade_stake_pool(self) -> Self {
+        todo!()
     }
 }

@@ -9,6 +9,7 @@ mod set_protocol_fee_beneficiary;
 mod set_rebalance_authority;
 mod set_sol_value_calculator;
 
+use bytemuck::AnyBitPattern;
 pub use initialize::*;
 pub use set_admin::*;
 pub use set_pricing_program::*;
@@ -99,6 +100,22 @@ impl SProgramTestEnvironment {
         Ok(mint.owner)
     }
 
+    pub async fn get_lst_state_list(
+        &self,
+    ) -> Result<Option<Vec<LstState>>, Box<dyn std::error::Error>> {
+        let mut test_fixtures = self.test_fixtures.lock().unwrap();
+        let account = test_fixtures
+            .program_simulator
+            .get_account(self.get_lst_state_list_pubkey())
+            .await?
+            .unwrap();
+
+        // Get the slice from the account data.
+        let list_slice = try_list(&account.data);
+        // Convert it to a Vec if it exists.
+        Ok(list_slice.map(|s| s.to_vec()))
+    }
+
     // pub async fn get_lst_state_list(&self) -> Result<&[LstState], Box<dyn std::error::Error>> {
     //     let mut test_fixtures = self.test_fixtures.lock().unwrap();
     //     let token_account = test_fixtures
@@ -160,4 +177,16 @@ pub async fn setup_s_program_test_environment() -> SProgramTestEnvironment {
         rebalance_authority: authority.insecure_clone(),
         lp_mint,
     }
+}
+
+fn try_list<T: AnyBitPattern>(list_acc_data: &[u8]) -> Option<&[T]> {
+    if list_acc_data.len() % std::mem::size_of::<T>() != 0 {
+        return None;
+    }
+    let ptr = list_acc_data.as_ptr();
+    if ptr.align_offset(std::mem::align_of::<T>()) != 0 {
+        return None;
+    }
+    let len = list_acc_data.len() / std::mem::size_of::<T>();
+    Some(unsafe { std::slice::from_raw_parts(ptr as *const T, len) })
 }

@@ -5717,6 +5717,7 @@ name = "test-utils"
 version = "0.1.0"
 dependencies = [
  "async-trait",
+ "bytemuck",
  "cargo_metadata",
  "flat-fee",
  "flat-fee-lib",
