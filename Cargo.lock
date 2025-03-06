@@ -531,7 +531,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "115e54d64eb62cdebad391c19efc9dce4981c690c85a33a12199d99bb9546fee"
 dependencies = [
  "borsh-derive 0.10.4",
- "hashbrown 0.12.3",
+ "hashbrown 0.13.2",
 ]
 
 [[package]]
@@ -1405,7 +1405,7 @@ dependencies = [
 [[package]]
 name = "flat-fee"
 version = "1.0.0"
-source = "git+https://github.com/moose-labs/S?branch=custom_address#ab514e5cb0d1ccecac939a085db67bb325e199cd"
+source = "git+https://github.com/moose-labs/S?branch=custom_address#f3aa6574a83fff1e84fdeb4592cbc1840d7ce654"
 dependencies = [
  "flat-fee-lib",
  "flat_fee_interface",
@@ -1419,7 +1419,7 @@ dependencies = [
 [[package]]
 name = "flat-fee-lib"
 version = "0.1.0"
-source = "git+https://github.com/moose-labs/S?branch=custom_address#ab514e5cb0d1ccecac939a085db67bb325e199cd"
+source = "git+https://github.com/moose-labs/S?branch=custom_address#f3aa6574a83fff1e84fdeb4592cbc1840d7ce654"
 dependencies = [
  "borsh 1.5.5",
  "bytemuck",
@@ -1434,7 +1434,7 @@ dependencies = [
 [[package]]
 name = "flat_fee_interface"
 version = "1.0.0"
-source = "git+https://github.com/moose-labs/S?branch=custom_address#ab514e5cb0d1ccecac939a085db67bb325e199cd"
+source = "git+https://github.com/moose-labs/S?branch=custom_address#f3aa6574a83fff1e84fdeb4592cbc1840d7ce654"
 dependencies = [
  "borsh 1.5.5",
  "bytemuck",
@@ -1587,7 +1587,7 @@ dependencies = [
 [[package]]
 name = "generic-pool-calculator-lib"
 version = "1.0.0"
-source = "git+https://github.com/moose-labs/S?branch=custom_address#ab514e5cb0d1ccecac939a085db67bb325e199cd"
+source = "git+https://github.com/moose-labs/S?branch=custom_address#f3aa6574a83fff1e84fdeb4592cbc1840d7ce654"
 dependencies = [
  "bincode",
  "bytemuck",
@@ -1600,7 +1600,7 @@ dependencies = [
 [[package]]
 name = "generic-pool-calculator-onchain"
 version = "1.0.0"
-source = "git+https://github.com/moose-labs/S?branch=custom_address#ab514e5cb0d1ccecac939a085db67bb325e199cd"
+source = "git+https://github.com/moose-labs/S?branch=custom_address#f3aa6574a83fff1e84fdeb4592cbc1840d7ce654"
 dependencies = [
  "bytemuck",
  "generic-pool-calculator-lib",
@@ -1615,7 +1615,7 @@ dependencies = [
 [[package]]
 name = "generic_pool_calculator_interface"
 version = "1.0.0"
-source = "git+https://github.com/moose-labs/S?branch=custom_address#ab514e5cb0d1ccecac939a085db67bb325e199cd"
+source = "git+https://github.com/moose-labs/S?branch=custom_address#f3aa6574a83fff1e84fdeb4592cbc1840d7ce654"
 dependencies = [
  "borsh 1.5.5",
  "bytemuck",
@@ -2272,7 +2272,7 @@ dependencies = [
 [[package]]
 name = "lido-calculator"
 version = "1.0.1"
-source = "git+https://github.com/moose-labs/S?branch=custom_address#ab514e5cb0d1ccecac939a085db67bb325e199cd"
+source = "git+https://github.com/moose-labs/S?branch=custom_address#f3aa6574a83fff1e84fdeb4592cbc1840d7ce654"
 dependencies = [
  "borsh 1.5.5",
  "generic-pool-calculator-lib",
@@ -2288,7 +2288,7 @@ dependencies = [
 [[package]]
 name = "lido-calculator-lib"
 version = "2.0.0"
-source = "git+https://github.com/moose-labs/S?branch=custom_address#ab514e5cb0d1ccecac939a085db67bb325e199cd"
+source = "git+https://github.com/moose-labs/S?branch=custom_address#f3aa6574a83fff1e84fdeb4592cbc1840d7ce654"
 dependencies = [
  "borsh 1.5.5",
  "generic-pool-calculator-lib",
@@ -2305,7 +2305,7 @@ dependencies = [
 [[package]]
 name = "lido-keys"
 version = "1.0.0"
-source = "git+https://github.com/moose-labs/S?branch=custom_address#ab514e5cb0d1ccecac939a085db67bb325e199cd"
+source = "git+https://github.com/moose-labs/S?branch=custom_address#f3aa6574a83fff1e84fdeb4592cbc1840d7ce654"
 dependencies = [
  "sanctum-macros",
  "solana-program",
@@ -2314,7 +2314,7 @@ dependencies = [
 [[package]]
 name = "lido_calculator_interface"
 version = "1.0.0"
-source = "git+https://github.com/moose-labs/S?branch=custom_address#ab514e5cb0d1ccecac939a085db67bb325e199cd"
+source = "git+https://github.com/moose-labs/S?branch=custom_address#f3aa6574a83fff1e84fdeb4592cbc1840d7ce654"
 dependencies = [
  "borsh 1.5.5",
  "num-derive 0.4.2",
@@ -2394,7 +2394,7 @@ dependencies = [
 [[package]]
 name = "marinade-calculator"
 version = "1.0.0"
-source = "git+https://github.com/moose-labs/S?branch=custom_address#ab514e5cb0d1ccecac939a085db67bb325e199cd"
+source = "git+https://github.com/moose-labs/S?branch=custom_address#f3aa6574a83fff1e84fdeb4592cbc1840d7ce654"
 dependencies = [
  "borsh 1.5.5",
  "generic-pool-calculator-lib",
@@ -2410,7 +2410,7 @@ dependencies = [
 [[package]]
 name = "marinade-calculator-lib"
 version = "1.0.0"
-source = "git+https://github.com/moose-labs/S?branch=custom_address#ab514e5cb0d1ccecac939a085db67bb325e199cd"
+source = "git+https://github.com/moose-labs/S?branch=custom_address#f3aa6574a83fff1e84fdeb4592cbc1840d7ce654"
 dependencies = [
  "generic-pool-calculator-lib",
  "generic_pool_calculator_interface",
@@ -2425,7 +2425,7 @@ dependencies = [
 [[package]]
 name = "marinade-keys"
 version = "1.0.0"
-source = "git+https://github.com/moose-labs/S?branch=custom_address#ab514e5cb0d1ccecac939a085db67bb325e199cd"
+source = "git+https://github.com/moose-labs/S?branch=custom_address#f3aa6574a83fff1e84fdeb4592cbc1840d7ce654"
 dependencies = [
  "sanctum-macros",
  "solana-program",
@@ -2434,7 +2434,7 @@ dependencies = [
 [[package]]
 name = "marinade_calculator_interface"
 version = "1.0.0"
-source = "git+https://github.com/moose-labs/S?branch=custom_address#ab514e5cb0d1ccecac939a085db67bb325e199cd"
+source = "git+https://github.com/moose-labs/S?branch=custom_address#f3aa6574a83fff1e84fdeb4592cbc1840d7ce654"
 dependencies = [
  "borsh 1.5.5",
  "num-derive 0.4.2",
@@ -2579,6 +2579,16 @@ dependencies = [
  "libc",
  "memoffset 0.7.1",
  "pin-utils",
+]
+
+[[package]]
+name = "no-fee-pricing-program"
+version = "1.0.0"
+source = "git+https://github.com/moose-labs/S?branch=custom_address#f3aa6574a83fff1e84fdeb4592cbc1840d7ce654"
+dependencies = [
+ "pricing_programs_interface",
+ "sanctum-macros",
+ "solana-program",
 ]
 
 [[package]]
@@ -3045,7 +3055,7 @@ dependencies = [
 [[package]]
 name = "pricing_programs_interface"
 version = "1.0.0"
-source = "git+https://github.com/moose-labs/S?branch=custom_address#ab514e5cb0d1ccecac939a085db67bb325e199cd"
+source = "git+https://github.com/moose-labs/S?branch=custom_address#f3aa6574a83fff1e84fdeb4592cbc1840d7ce654"
 dependencies = [
  "borsh 1.5.5",
  "bytemuck",
@@ -3545,7 +3555,7 @@ checksum = "6ea1a2d0a644769cc99faa24c3ad26b379b786fe7c36fd3c546254801650e6dd"
 [[package]]
 name = "s-controller"
 version = "1.0.0"
-source = "git+https://github.com/moose-labs/S?branch=custom_address#ab514e5cb0d1ccecac939a085db67bb325e199cd"
+source = "git+https://github.com/moose-labs/S?branch=custom_address#f3aa6574a83fff1e84fdeb4592cbc1840d7ce654"
 dependencies = [
  "borsh 1.5.5",
  "bytemuck",
@@ -3569,7 +3579,7 @@ dependencies = [
 [[package]]
 name = "s-controller-lib"
 version = "1.0.0"
-source = "git+https://github.com/moose-labs/S?branch=custom_address#ab514e5cb0d1ccecac939a085db67bb325e199cd"
+source = "git+https://github.com/moose-labs/S?branch=custom_address#f3aa6574a83fff1e84fdeb4592cbc1840d7ce654"
 dependencies = [
  "borsh 1.5.5",
  "bytemuck",
@@ -3591,8 +3601,13 @@ dependencies = [
 name = "s-program-sdk"
 version = "0.1.0"
 dependencies = [
+ "flat-fee-lib",
+ "no-fee-pricing-program",
+ "s-controller-lib",
  "solana-program",
  "solana-sdk",
+ "spl-calculator-lib",
+ "spl-token",
  "test-utils",
  "tokio",
 ]
@@ -3600,7 +3615,7 @@ dependencies = [
 [[package]]
 name = "s_controller_interface"
 version = "1.0.0"
-source = "git+https://github.com/moose-labs/S?branch=custom_address#ab514e5cb0d1ccecac939a085db67bb325e199cd"
+source = "git+https://github.com/moose-labs/S?branch=custom_address#f3aa6574a83fff1e84fdeb4592cbc1840d7ce654"
 dependencies = [
  "borsh 1.5.5",
  "bytemuck",
@@ -3654,7 +3669,7 @@ dependencies = [
 [[package]]
 name = "sanctum-s-common"
 version = "0.1.0"
-source = "git+https://github.com/moose-labs/S?branch=custom_address#ab514e5cb0d1ccecac939a085db67bb325e199cd"
+source = "git+https://github.com/moose-labs/S?branch=custom_address#f3aa6574a83fff1e84fdeb4592cbc1840d7ce654"
 dependencies = [
  "sanctum-token-lib",
  "solana-program",
@@ -3665,7 +3680,7 @@ dependencies = [
 [[package]]
 name = "sanctum-spl-multi-stake-pool-keys"
 version = "1.0.0"
-source = "git+https://github.com/moose-labs/S?branch=custom_address#ab514e5cb0d1ccecac939a085db67bb325e199cd"
+source = "git+https://github.com/moose-labs/S?branch=custom_address#f3aa6574a83fff1e84fdeb4592cbc1840d7ce654"
 dependencies = [
  "sanctum-macros",
  "solana-program",
@@ -3674,7 +3689,7 @@ dependencies = [
 [[package]]
 name = "sanctum-spl-stake-pool-keys"
 version = "1.0.0"
-source = "git+https://github.com/moose-labs/S?branch=custom_address#ab514e5cb0d1ccecac939a085db67bb325e199cd"
+source = "git+https://github.com/moose-labs/S?branch=custom_address#f3aa6574a83fff1e84fdeb4592cbc1840d7ce654"
 dependencies = [
  "sanctum-macros",
  "solana-program",
@@ -4009,7 +4024,7 @@ dependencies = [
 [[package]]
 name = "sol-value-calculator-lib"
 version = "1.0.0"
-source = "git+https://github.com/moose-labs/S?branch=custom_address#ab514e5cb0d1ccecac939a085db67bb325e199cd"
+source = "git+https://github.com/moose-labs/S?branch=custom_address#f3aa6574a83fff1e84fdeb4592cbc1840d7ce654"
 dependencies = [
  "sanctum-token-ratio",
  "solana-program",
@@ -4018,7 +4033,7 @@ dependencies = [
 [[package]]
 name = "sol-value-calculator-onchain"
 version = "1.0.0"
-source = "git+https://github.com/moose-labs/S?branch=custom_address#ab514e5cb0d1ccecac939a085db67bb325e199cd"
+source = "git+https://github.com/moose-labs/S?branch=custom_address#f3aa6574a83fff1e84fdeb4592cbc1840d7ce654"
 dependencies = [
  "borsh 1.5.5",
  "sanctum-token-ratio",
@@ -4029,7 +4044,7 @@ dependencies = [
 [[package]]
 name = "sol_value_calculator_interface"
 version = "1.0.0"
-source = "git+https://github.com/moose-labs/S?branch=custom_address#ab514e5cb0d1ccecac939a085db67bb325e199cd"
+source = "git+https://github.com/moose-labs/S?branch=custom_address#f3aa6574a83fff1e84fdeb4592cbc1840d7ce654"
 dependencies = [
  "borsh 1.5.5",
  "solana-program",
@@ -5216,7 +5231,7 @@ dependencies = [
 [[package]]
 name = "spl-calculator"
 version = "1.0.1"
-source = "git+https://github.com/moose-labs/S?branch=custom_address#ab514e5cb0d1ccecac939a085db67bb325e199cd"
+source = "git+https://github.com/moose-labs/S?branch=custom_address#f3aa6574a83fff1e84fdeb4592cbc1840d7ce654"
 dependencies = [
  "generic-pool-calculator-lib",
  "generic-pool-calculator-onchain",
@@ -5231,7 +5246,7 @@ dependencies = [
 [[package]]
 name = "spl-calculator-lib"
 version = "2.0.0"
-source = "git+https://github.com/moose-labs/S?branch=custom_address#ab514e5cb0d1ccecac939a085db67bb325e199cd"
+source = "git+https://github.com/moose-labs/S?branch=custom_address#f3aa6574a83fff1e84fdeb4592cbc1840d7ce654"
 dependencies = [
  "borsh 1.5.5",
  "generic-pool-calculator-lib",
@@ -5332,7 +5347,7 @@ dependencies = [
 [[package]]
 name = "spl-stake-pool-keys"
 version = "1.0.0"
-source = "git+https://github.com/moose-labs/S?branch=custom_address#ab514e5cb0d1ccecac939a085db67bb325e199cd"
+source = "git+https://github.com/moose-labs/S?branch=custom_address#f3aa6574a83fff1e84fdeb4592cbc1840d7ce654"
 dependencies = [
  "sanctum-macros",
  "solana-program",
@@ -5450,7 +5465,7 @@ dependencies = [
 [[package]]
 name = "spl_calculator_interface"
 version = "1.0.0"
-source = "git+https://github.com/moose-labs/S?branch=custom_address#ab514e5cb0d1ccecac939a085db67bb325e199cd"
+source = "git+https://github.com/moose-labs/S?branch=custom_address#f3aa6574a83fff1e84fdeb4592cbc1840d7ce654"
 dependencies = [
  "borsh 1.5.5",
  "num-derive 0.4.2",
@@ -5725,6 +5740,7 @@ dependencies = [
  "lido-calculator-lib",
  "marinade-calculator",
  "marinade-calculator-lib",
+ "no-fee-pricing-program",
  "program-simulator",
  "s-controller",
  "s-controller-lib",
@@ -6414,7 +6430,7 @@ version = "0.1.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "cf221c93e13a30d793f7645a0e7762c55d169dbb0a49671918a2319d289b10bb"
 dependencies = [
- "windows-sys 0.52.0",
+ "windows-sys 0.48.0",
 ]
 
 [[package]]

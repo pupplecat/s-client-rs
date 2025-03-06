@@ -10,10 +10,6 @@ mod set_rebalance_authority;
 mod set_sol_value_calculator;
 
 use bytemuck::AnyBitPattern;
-pub use initialize::*;
-pub use set_admin::*;
-pub use set_pricing_program::*;
-pub use set_protocol_fee_beneficiary::*;
 
 use s_controller_interface::{LstState, PoolState};
 use solana_program_test::BanksClientError;
@@ -22,7 +18,6 @@ use std::sync::{Arc, Mutex};
 
 use solana_sdk::{
     instruction::Instruction,
-    native_token::LAMPORTS_PER_SOL,
     pubkey::Pubkey,
     signature::{read_keypair_file, Keypair, Signature},
     signer::Signer,
@@ -32,6 +27,7 @@ use crate::{utils::test_fixtures_dir, ProgramTestFixtures};
 
 pub struct SProgramTestEnvironment {
     pub test_fixtures: Arc<Mutex<ProgramTestFixtures>>,
+    pub payer: Keypair,
     pub authority: Keypair,
     pub rebalance_authority: Keypair,
     pub lp_mint: Pubkey,
@@ -108,7 +104,7 @@ impl SProgramTestEnvironment {
             .program_simulator
             .get_account(self.get_lst_state_list_pubkey())
             .await?
-            .unwrap();
+            .unwrap_or_default();
 
         // Get the slice from the account data.
         let list_slice = try_list(&account.data);
@@ -156,15 +152,15 @@ impl SProgramTestEnvironment {
 pub async fn setup_s_program_test_environment() -> SProgramTestEnvironment {
     let mut test_fixtures = ProgramTestFixtures::setup_test_fixtures().await;
 
+    let payer = test_fixtures
+        .program_simulator
+        .get_funded_keypair()
+        .await
+        .unwrap();
+
     let authority =
         read_keypair_file(test_fixtures_dir().join("s-controller-test-initial-authority-key.json"))
             .unwrap();
-
-    test_fixtures
-        .program_simulator
-        .airdrop(&authority.pubkey(), 10 * LAMPORTS_PER_SOL)
-        .await
-        .unwrap();
 
     let lp_mint = test_fixtures
         .create_mint(&authority.pubkey(), 9)
@@ -173,6 +169,7 @@ pub async fn setup_s_program_test_environment() -> SProgramTestEnvironment {
 
     SProgramTestEnvironment {
         test_fixtures: Arc::new(Mutex::new(test_fixtures)),
+        payer,
         authority: authority.insecure_clone(),
         rebalance_authority: authority.insecure_clone(),
         lp_mint,

@@ -11,6 +11,13 @@ name = "s_program_sdk"
 solana-program = { workspace = true }
 
 [dev-dependencies]
+spl-token = { workspace = true }
+
 tokio = { version = "1.40.0", features = ["rt-multi-thread", "macros"] }
-test-utils = { workspace = true}
+test-utils = { workspace = true }
 solana-sdk = { workspace = true }
+flat-fee-lib = { workspace = true, features = ["testing"] }
+no-fee-pricing-program = { workspace = true, features = ["testing"] }
+
+s-controller-lib = { workspace = true, features = ["testing"] }
+spl-calculator-lib = { workspace = true }

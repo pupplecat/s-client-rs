@@ -22,7 +22,7 @@ impl SProgramTestEnvironment {
             },
         )?;
 
-        self.process_instruction(set_protocol_fee_instruction, &vec![&self.authority], None)
+        self.process_instruction(set_protocol_fee_instruction, &vec![&self.authority], Some(&self.payer),)
             .await?;
 
         Ok(())

@@ -22,7 +22,7 @@ impl SProgramTestEnvironment {
         self.process_instruction(
             add_disable_pool_authority_instruction,
             &vec![&self.authority],
-            None,
+            Some(&self.payer),
         )
         .await?;
 

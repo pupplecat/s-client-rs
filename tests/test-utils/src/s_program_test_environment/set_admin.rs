@@ -13,8 +13,12 @@ impl SProgramTestEnvironment {
             pool_state: self.get_pool_state_pubkey(),
         })?;
 
-        self.process_instruction(set_admin_instruction, &vec![&self.authority], None)
-            .await?;
+        self.process_instruction(
+            set_admin_instruction,
+            &vec![&self.authority],
+            Some(&self.payer),
+        )
+        .await?;
 
         self.authority = new_admin_keypair.insecure_clone();
 

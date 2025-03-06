@@ -1,9 +1,9 @@
 use s_controller_interface::{add_lst_ix, AddLstKeys};
 use s_controller_lib::{
-    create_pool_reserves_address, find_pool_reserves_address,
-    find_protocol_fee_accumulator_address, find_protocol_fee_address, FindLstPdaAtaKeys,
+    find_pool_reserves_address, find_protocol_fee_accumulator_address, find_protocol_fee_address,
+    FindLstPdaAtaKeys,
 };
-use solana_sdk::{pubkey::Pubkey, system_program};
+use solana_sdk::{pubkey::Pubkey, signer::Signer, system_program};
 use spl_associated_token_account::ID;
 
 use crate::TestResult;
@@ -33,7 +33,7 @@ impl SProgramTestEnvironment {
 
         let add_lst_instruction = add_lst_ix(AddLstKeys {
             admin: pool_state.admin,
-            payer: pool_state.admin,
+            payer: self.payer.pubkey(),
             lst_mint: lst_mint_pubkey,
             pool_reserves: pool_reserves_pubkey,
             protocol_fee_accumulator: protocol_fee_accumulator_pubkey,
@@ -46,8 +46,12 @@ impl SProgramTestEnvironment {
             lst_token_program,
         })?;
 
-        self.process_instruction(add_lst_instruction, &vec![&self.authority], None)
-            .await?;
+        self.process_instruction(
+            add_lst_instruction,
+            &vec![&self.authority],
+            Some(&self.payer),
+        )
+        .await?;
 
         Ok(())
     }

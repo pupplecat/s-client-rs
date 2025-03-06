@@ -70,3 +70,4 @@ marinade-calculator = { git = "https://github.com/moose-labs/S", branch = "custo
 marinade-calculator-lib = { git = "https://github.com/moose-labs/S", branch = "custom_address" }
 lido-calculator = { git = "https://github.com/moose-labs/S", branch = "custom_address" }
 lido-calculator-lib = { git = "https://github.com/moose-labs/S", branch = "custom_address" }
+no-fee-pricing-program = { git = "https://github.com/moose-labs/S", branch = "custom_address" }

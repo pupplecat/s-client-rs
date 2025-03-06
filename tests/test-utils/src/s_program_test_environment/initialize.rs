@@ -9,7 +9,7 @@ impl SProgramTestEnvironment {
     pub async fn initialize(&mut self) -> TestResult {
         let authority = self.authority.pubkey();
         let initialize_instruction = initialize_ix(InitializeKeys {
-            payer: self.authority.pubkey(),
+            payer: self.payer.pubkey(),
             authority,
             pool_state: self.get_pool_state_pubkey(),
             lp_token_mint: self.lp_mint,
@@ -17,8 +17,12 @@ impl SProgramTestEnvironment {
             system_program: system_program::ID,
         })?;
 
-        self.process_instruction(initialize_instruction, &vec![&self.authority], None)
-            .await?;
+        self.process_instruction(
+            initialize_instruction,
+            &vec![&self.authority],
+            Some(&self.payer),
+        )
+        .await?;
 
         Ok(())
     }

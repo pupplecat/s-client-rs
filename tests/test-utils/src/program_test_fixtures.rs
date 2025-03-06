@@ -40,6 +40,7 @@ impl ProgramTestFixtures {
         let program_test: ProgramTest = ProgramTest::default()
             .add_s_controller_program()
             .add_flat_fee_program()
+            .add_no_fee_program()
             .add_lido_calculator_program()
             .add_marinade_calculator_program()
             .add_spl_calculator_program();

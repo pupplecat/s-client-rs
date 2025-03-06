@@ -20,7 +20,7 @@ impl SProgramTestEnvironment {
         self.process_instruction(
             set_rebalance_authority_instruction,
             &vec![&self.authority],
-            None,
+            Some(&self.payer),
         )
         .await?;
 

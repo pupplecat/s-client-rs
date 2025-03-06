@@ -25,6 +25,7 @@ marinade-calculator = { workspace = true }
 marinade-calculator-lib = { workspace = true }
 lido-calculator = { workspace = true }
 lido-calculator-lib = { workspace = true }
+no-fee-pricing-program = { workspace = true, features = ["testing"] }
 
 cargo_metadata = "0.19.1"
 async-trait = { workspace = true }

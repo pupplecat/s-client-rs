@@ -26,7 +26,7 @@ impl SProgramTestEnvironment {
         // self.process_instruction(
         //     set_sol_value_calculator_instruction,
         //     &vec![&self.authority],
-        //     None,
+        //    Some(&self.payer),
         // )
         // .await?;
 
