@@ -11,3 +11,14 @@ pub fn try_find_lst_state_index(
         .find(|(_i, s)| s.mint == lst_mint)
         .ok_or(SControllerError::InvalidLstIndex)
 }
+
+pub fn try_find_disable_authority_index(
+    pubkey_list: &Vec<Pubkey>,
+    pubkey: Pubkey,
+) -> Result<(usize, &Pubkey), SControllerError> {
+    pubkey_list
+        .iter()
+        .enumerate()
+        .find(|(_i, &s)| s == pubkey)
+        .ok_or(SControllerError::InvalidDisablePoolAuthorityIndex)
+}

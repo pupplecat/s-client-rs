@@ -2,6 +2,7 @@ mod add_disable_pool_authority;
 mod add_liquidity;
 mod add_lst;
 mod initialize;
+mod remove_disable_pool_authority;
 mod set_admin;
 mod set_pricing_program;
 mod set_protocol_fee;
@@ -13,7 +14,7 @@ use bytemuck::AnyBitPattern;
 
 use s_controller_interface::{LstState, PoolState};
 use solana_program_test::BanksClientError;
-use spl_token::state::Mint;
+use spl_token::state::{Account, Mint};
 use std::sync::{Arc, Mutex};
 
 use solana_sdk::{
@@ -96,6 +97,19 @@ impl SProgramTestEnvironment {
         Ok(mint.owner)
     }
 
+    pub async fn get_token_account_by_pubkey(
+        &self,
+        account: &Pubkey,
+    ) -> Result<Account, Box<dyn std::error::Error>> {
+        let mut test_fixtures = self.test_fixtures.lock().unwrap();
+        let token_account = test_fixtures
+            .program_simulator
+            .get_packed_account_data(*account)
+            .await?;
+
+        Ok(token_account)
+    }
+
     pub async fn get_lst_state_list(
         &self,
     ) -> Result<Option<Vec<LstState>>, Box<dyn std::error::Error>> {
@@ -103,8 +117,33 @@ impl SProgramTestEnvironment {
         let account = test_fixtures
             .program_simulator
             .get_account(self.get_lst_state_list_pubkey())
-            .await?
-            .unwrap_or_default();
+            .await?;
+
+        if account.is_none() {
+            return Ok(None);
+        }
+
+        let account = account.unwrap();
+        // Get the slice from the account data.
+        let list_slice = try_list(&account.data);
+        // Convert it to a Vec if it exists.
+        Ok(list_slice.map(|s| s.to_vec()))
+    }
+
+    pub async fn get_disable_pool_authority_list(
+        &self,
+    ) -> Result<Option<Vec<Pubkey>>, Box<dyn std::error::Error>> {
+        let mut test_fixtures = self.test_fixtures.lock().unwrap();
+        let account = test_fixtures
+            .program_simulator
+            .get_account(self.get_disable_pool_authority_list_pubkey())
+            .await?;
+
+        if account.is_none() {
+            return Ok(None);
+        }
+
+        let account = account.unwrap();
 
         // Get the slice from the account data.
         let list_slice = try_list(&account.data);
@@ -146,6 +185,10 @@ impl SProgramTestEnvironment {
 
     pub fn get_disable_pool_authority_list_pubkey(&self) -> Pubkey {
         s_controller_lib::program::DISABLE_POOL_AUTHORITY_LIST_ID
+    }
+
+    pub fn get_protocol_fee_auth_pubkey(&self) -> Pubkey {
+        s_controller_lib::program::PROTOCOL_FEE_ID
     }
 }
 

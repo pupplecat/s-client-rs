@@ -531,7 +531,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "115e54d64eb62cdebad391c19efc9dce4981c690c85a33a12199d99bb9546fee"
 dependencies = [
  "borsh-derive 0.10.4",
- "hashbrown 0.13.2",
+ "hashbrown 0.12.3",
 ]
 
 [[package]]
@@ -1147,6 +1147,17 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn 1.0.109",
+]
+
+[[package]]
+name = "derive_more"
+version = "0.99.19"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3da29a38df43d6f156149c9b43ded5e018ddff2a855cf2cfd62e8cd7d079c69f"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.98",
 ]
 
 [[package]]
@@ -3602,6 +3613,8 @@ name = "s-program-sdk"
 version = "0.1.0"
 dependencies = [
  "flat-fee-lib",
+ "lido-keys",
+ "marinade-keys",
  "no-fee-pricing-program",
  "s-controller-lib",
  "solana-program",
@@ -3610,6 +3623,7 @@ dependencies = [
  "spl-token",
  "test-utils",
  "tokio",
+ "wsol-keys",
 ]
 
 [[package]]
@@ -4686,7 +4700,9 @@ version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a8cf9c7fb090625aa0be1c81845712cebcbfeadf771146b0829b0f03569e1c4c"
 dependencies = [
+ "derive_more",
  "solana-program",
+ "solana-sdk",
 ]
 
 [[package]]
@@ -5738,19 +5754,29 @@ dependencies = [
  "flat-fee-lib",
  "lido-calculator",
  "lido-calculator-lib",
+ "lido-keys",
+ "log",
  "marinade-calculator",
  "marinade-calculator-lib",
+ "marinade-keys",
  "no-fee-pricing-program",
  "program-simulator",
  "s-controller",
  "s-controller-lib",
  "s_controller_interface",
+ "serde",
+ "serde_json",
+ "solana-account-decoder",
+ "solana-program",
  "solana-program-test",
+ "solana-readonly-account",
  "solana-sdk",
  "spl-associated-token-account",
  "spl-calculator",
  "spl-calculator-lib",
  "spl-token",
+ "wsol-calculator-lib",
+ "wsol-keys",
 ]
 
 [[package]]
@@ -6430,7 +6456,7 @@ version = "0.1.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "cf221c93e13a30d793f7645a0e7762c55d169dbb0a49671918a2319d289b10bb"
 dependencies = [
- "windows-sys 0.48.0",
+ "windows-sys 0.52.0",
 ]
 
 [[package]]
@@ -6650,6 +6676,39 @@ name = "writeable"
 version = "0.5.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1e9df38ee2d2c3c5948ea468a8406ff0db0b29ae1ffde1bcf20ef305bcc95c51"
+
+[[package]]
+name = "wsol-calculator-lib"
+version = "1.0.0"
+source = "git+https://github.com/moose-labs/S?branch=custom_address#f3aa6574a83fff1e84fdeb4592cbc1840d7ce654"
+dependencies = [
+ "sanctum-token-ratio",
+ "sol-value-calculator-lib",
+ "solana-program",
+ "wsol-keys",
+ "wsol_calculator_interface",
+]
+
+[[package]]
+name = "wsol-keys"
+version = "1.0.0"
+source = "git+https://github.com/moose-labs/S?branch=custom_address#f3aa6574a83fff1e84fdeb4592cbc1840d7ce654"
+dependencies = [
+ "sanctum-macros",
+ "solana-program",
+]
+
+[[package]]
+name = "wsol_calculator_interface"
+version = "1.0.0"
+source = "git+https://github.com/moose-labs/S?branch=custom_address#f3aa6574a83fff1e84fdeb4592cbc1840d7ce654"
+dependencies = [
+ "borsh 1.5.5",
+ "num-derive 0.4.2",
+ "num-traits",
+ "solana-program",
+ "thiserror 1.0.69",
+]
 
 [[package]]
 name = "x509-parser"

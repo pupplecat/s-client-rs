@@ -42,7 +42,11 @@ impl ProgramTestFixtures {
             .add_flat_fee_program()
             .add_no_fee_program()
             .add_lido_calculator_program()
+            .add_lido_prog()
+            .add_lido_stake_pool()
             .add_marinade_calculator_program()
+            .add_marinade_prog()
+            .add_marinade_stake_pool()
             .add_spl_calculator_program();
 
         let mut program_simulator = ProgramSimulator::start_from_program_test(program_test).await;

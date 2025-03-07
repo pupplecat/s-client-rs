@@ -1,10 +1,10 @@
 #[cfg(test)]
 mod test_add_lst {
 
+    use marinade_keys::msol;
     use s_controller_lib::{
         find_pool_reserves_address, find_protocol_fee_accumulator_address, FindLstPdaAtaKeys,
     };
-    use solana_sdk::signer::Signer;
     use test_utils::{setup_s_program_test_environment, TestResult};
 
     #[tokio::test]
@@ -13,20 +13,18 @@ mod test_add_lst {
 
         env.initialize().await?;
 
-        let lst_mint = {
-            let mut test_fixtures = env.test_fixtures.lock().unwrap();
-            test_fixtures.create_mint(&env.payer.pubkey(), 9).await?
-        };
+        let lst_mint = msol::ID;
+        let lst_mint_program_id = env.get_mint_token_program(lst_mint).await?;
 
-        let (_pool_reserves, pool_reserves_bump) = find_pool_reserves_address(FindLstPdaAtaKeys {
+        let (pool_reserves, pool_reserves_bump) = find_pool_reserves_address(FindLstPdaAtaKeys {
             lst_mint,
-            token_program: spl_token::ID,
+            token_program: lst_mint_program_id,
         });
 
-        let (_protocol_fee_accumulator, protocol_fee_accumulator_bump) =
+        let (protocol_fee_accumulator, protocol_fee_accumulator_bump) =
             find_protocol_fee_accumulator_address(FindLstPdaAtaKeys {
                 lst_mint,
-                token_program: spl_token::ID,
+                token_program: lst_mint_program_id,
             });
 
         let lst_state_list = env.get_lst_state_list().await?;
@@ -36,7 +34,12 @@ mod test_add_lst {
             .await?;
 
         let lst_state_list = env.get_lst_state_list().await?;
+        let pool_reserves_token_account = env.get_token_account_by_pubkey(&pool_reserves).await?;
+        let protocol_fee_accumulator_token_account = env
+            .get_token_account_by_pubkey(&protocol_fee_accumulator)
+            .await?;
 
+        // verify lst state list account
         assert!(lst_state_list.is_some());
         let lst_state_list = lst_state_list.unwrap();
         assert_eq!(lst_state_list.len(), 1);
@@ -53,6 +56,18 @@ mod test_add_lst {
         );
         assert_eq!(lst_state_list[0].padding, [0; 5]);
         assert_eq!(lst_state_list[0].sol_value, 0);
+
+        // verify token accounts
+        assert_eq!(pool_reserves_token_account.mint, lst_mint);
+        assert_eq!(
+            pool_reserves_token_account.owner,
+            env.get_pool_state_pubkey()
+        );
+        assert_eq!(protocol_fee_accumulator_token_account.mint, lst_mint);
+        assert_eq!(
+            protocol_fee_accumulator_token_account.owner,
+            env.get_protocol_fee_auth_pubkey()
+        );
 
         Ok(())
     }

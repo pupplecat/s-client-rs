@@ -1,5 +1,5 @@
 use s_controller_interface::{add_disable_pool_authority_ix, AddDisablePoolAuthorityKeys};
-use solana_sdk::{pubkey::Pubkey, system_program};
+use solana_sdk::{pubkey::Pubkey, signer::Signer, system_program};
 
 use crate::TestResult;
 
@@ -11,8 +11,8 @@ impl SProgramTestEnvironment {
 
         let add_disable_pool_authority_instruction =
             add_disable_pool_authority_ix(AddDisablePoolAuthorityKeys {
-                payer: pool_state.admin, // signer
-                admin: pool_state.admin, // signer
+                payer: self.payer.pubkey(), // signer
+                admin: pool_state.admin,    // signer
                 pool_state: self.get_pool_state_pubkey(),
                 new_authority,
                 disable_pool_authority_list: self.get_disable_pool_authority_list_pubkey(),
