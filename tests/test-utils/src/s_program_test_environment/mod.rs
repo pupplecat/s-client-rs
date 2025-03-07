@@ -3,6 +3,7 @@ mod add_liquidity;
 mod add_lst;
 mod initialize;
 mod remove_disable_pool_authority;
+mod remove_lst;
 mod set_admin;
 mod set_pricing_program;
 mod set_protocol_fee;
