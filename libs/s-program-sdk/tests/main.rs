@@ -1,2 +1,1 @@
-mod initialize;
-mod set_admin;
+mod test_instructions;
