@@ -1,39 +1,47 @@
-#[cfg(test)]
-mod test_set_protocol_fee_beneficiary {
-    use solana_sdk::{signature::Keypair, signer::Signer};
-    use test_utils::{setup_s_program_test_environment, TestResult};
+use solana_program_test::ProgramTest;
+use solana_sdk::{signature::Keypair, signer::Signer};
+use test_utils::{
+    program_test::{PoolStateProgramTest, SControllerProgramTest, DEFAULT_POOL_STATE},
+    setup_s_program_test_environment_with_program_test, SProgramTestEnvironment, TestResult,
+};
 
-    #[tokio::test]
-    async fn test_set_protocol_fee_beneficiary() -> TestResult {
-        let mut env = setup_s_program_test_environment().await;
-        env.initialize().await?;
+async fn setup() -> SProgramTestEnvironment {
+    let program_test = ProgramTest::default()
+        .add_s_controller_program()
+        .add_pool_state(DEFAULT_POOL_STATE);
 
-        {
-            // first time
-            let new_protocol_fee_beneficiary = Keypair::new();
-            env.set_protocol_fee_beneficiary(&new_protocol_fee_beneficiary)
-                .await?;
-            let pool_state = env.get_pool_state().await?;
+    setup_s_program_test_environment_with_program_test(program_test).await
+}
 
-            assert_eq!(
-                pool_state.protocol_fee_beneficiary,
-                new_protocol_fee_beneficiary.pubkey()
-            );
-        }
+#[tokio::test]
+async fn test_set_protocol_fee_beneficiary() -> TestResult {
+    let mut env = setup().await;
 
-        {
-            // second time
-            let new_protocol_fee_beneficiary = Keypair::new();
-            env.set_protocol_fee_beneficiary(&new_protocol_fee_beneficiary)
-                .await?;
-            let pool_state = env.get_pool_state().await?;
+    {
+        // first time
+        let new_protocol_fee_beneficiary = Keypair::new();
+        env.set_protocol_fee_beneficiary(&new_protocol_fee_beneficiary)
+            .await?;
+        let pool_state = env.get_pool_state().await?;
 
-            assert_eq!(
-                pool_state.protocol_fee_beneficiary,
-                new_protocol_fee_beneficiary.pubkey()
-            );
-        }
-
-        Ok(())
+        assert_eq!(
+            pool_state.protocol_fee_beneficiary,
+            new_protocol_fee_beneficiary.pubkey()
+        );
     }
+
+    {
+        // second time
+        let new_protocol_fee_beneficiary = Keypair::new();
+        env.set_protocol_fee_beneficiary(&new_protocol_fee_beneficiary)
+            .await?;
+        let pool_state = env.get_pool_state().await?;
+
+        assert_eq!(
+            pool_state.protocol_fee_beneficiary,
+            new_protocol_fee_beneficiary.pubkey()
+        );
+    }
+
+    Ok(())
 }

@@ -9,8 +9,11 @@ name = "s_program_sdk"
 
 [dependencies]
 solana-program = { workspace = true }
+s_controller_interface = { workspace = true }
 
 [dev-dependencies]
+solana-program-test = { workspace = true }
+program-simulator = { workspace = true }
 spl-token = { workspace = true }
 
 tokio = { version = "1.40.0", features = ["rt-multi-thread", "macros"] }

@@ -14,7 +14,7 @@ mod set_sol_value_calculator;
 use bytemuck::AnyBitPattern;
 
 use s_controller_interface::{LstState, PoolState};
-use solana_program_test::BanksClientError;
+use solana_program_test::{BanksClientError, ProgramTest};
 use spl_token::state::{Account, Mint};
 use std::sync::{Arc, Mutex};
 
@@ -195,7 +195,37 @@ impl SProgramTestEnvironment {
 }
 
 pub async fn setup_s_program_test_environment() -> SProgramTestEnvironment {
-    let mut test_fixtures = ProgramTestFixtures::setup_test_fixtures().await;
+    let mut test_fixtures: ProgramTestFixtures = ProgramTestFixtures::setup_test_fixtures().await;
+
+    let payer = test_fixtures
+        .program_simulator
+        .get_funded_keypair()
+        .await
+        .unwrap();
+
+    let authority =
+        read_keypair_file(test_fixtures_dir().join("s-controller-test-initial-authority-key.json"))
+            .unwrap();
+
+    let lp_mint = test_fixtures
+        .create_mint(&authority.pubkey(), 9)
+        .await
+        .unwrap();
+
+    SProgramTestEnvironment {
+        test_fixtures: Arc::new(Mutex::new(test_fixtures)),
+        payer,
+        authority: authority.insecure_clone(),
+        rebalance_authority: authority.insecure_clone(),
+        protocol_fee_beneficiary: authority.insecure_clone(),
+        lp_mint,
+    }
+}
+
+pub async fn setup_s_program_test_environment_with_program_test(
+    program_test: ProgramTest,
+) -> SProgramTestEnvironment {
+    let mut test_fixtures: ProgramTestFixtures = ProgramTestFixtures::setup(program_test).await;
 
     let payer = test_fixtures
         .program_simulator

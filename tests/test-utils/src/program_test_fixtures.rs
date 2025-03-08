@@ -14,10 +14,10 @@ use cargo_metadata::MetadataCommand;
 
 pub struct ProgramTestFixtures {
     pub program_simulator: ProgramSimulator,
-    pub signer: Keypair,
+    pub payer: Keypair,
 }
 
-fn set_sbf_out_dir() {
+pub fn set_sbf_out_dir() {
     // Use cargo_metadata to fetch workspace metadata
     let metadata = MetadataCommand::new()
         .exec()
@@ -40,24 +40,25 @@ impl ProgramTestFixtures {
         let program_test: ProgramTest = ProgramTest::default()
             .add_flat_fee_program()
             .add_no_fee_program()
-            .add_lido_calculator_program()
-            // .add_lido_prog()
-            // .add_lido_stake_pool()
-            .add_marinade_calculator_program()
-            .add_marinade_prog()
+            .add_lido_progs()
+            .add_lido_stake_pool()
+            .add_marinade_progs()
             .add_marinade_stake_pool()
-            // .add_spl_calculator_program()
-            // .add_spl_prog()
-            // .add_jito_stake_pool();
+            .add_spl_progs()
+            .add_jito_stake_pool()
             .add_s_controller_program();
 
+        ProgramTestFixtures::setup(program_test).await
+    }
+
+    pub async fn setup(program_test: ProgramTest) -> Self {
         let mut program_simulator = ProgramSimulator::start_from_program_test(program_test).await;
 
-        let signer = program_simulator.get_funded_keypair().await.unwrap();
+        let payer = program_simulator.get_funded_keypair().await.unwrap();
 
         Self {
             program_simulator,
-            signer,
+            payer,
         }
     }
 
@@ -69,7 +70,7 @@ impl ProgramTestFixtures {
         let mint_keypair = Keypair::new();
 
         let create_account_instruction = create_account(
-            &self.signer.pubkey(),
+            &self.payer.pubkey(),
             &mint_keypair.pubkey(),
             Rent::default().minimum_balance(spl_token::state::Mint::LEN),
             spl_token::state::Mint::LEN as u64,
@@ -89,7 +90,7 @@ impl ProgramTestFixtures {
             .process_ixs_with_default_compute_limit(
                 &[create_account_instruction, initialize_mint_instruction],
                 &vec![&mint_keypair],
-                Some(&self.signer),
+                Some(&self.payer),
             )
             .await?;
 

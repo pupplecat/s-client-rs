@@ -1,7 +1,6 @@
 use std::path::PathBuf;
 
 use cargo_metadata::MetadataCommand;
-use solana_program_test::{find_file, read_file};
 
 pub fn get_workspace_root() -> PathBuf {
     let metadata = MetadataCommand::new()

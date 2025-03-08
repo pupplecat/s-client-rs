@@ -1,6 +1,7 @@
 mod add_disable_pool_authority;
 mod add_liquidity;
 mod add_lst;
+mod common;
 mod initialize;
 mod remove_disable_pool_authority;
 mod remove_lst;

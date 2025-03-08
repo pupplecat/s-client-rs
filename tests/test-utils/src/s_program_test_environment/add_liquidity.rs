@@ -1,13 +1,8 @@
 use s_controller_interface::{add_liquidity_ix, AddLiquidityIxArgs, AddLiquidityKeys};
 use s_controller_lib::{
-    add_liquidity_ix_full_for_prog, find_pool_reserves_address,
-    find_protocol_fee_accumulator_address, FindLstPdaAtaKeys,
+    find_pool_reserves_address, find_protocol_fee_accumulator_address, FindLstPdaAtaKeys,
 };
-use solana_sdk::{
-    pubkey::{self, Pubkey},
-    signature::Keypair,
-    signer::Signer,
-};
+use solana_sdk::{pubkey::Pubkey, signature::Keypair, signer::Signer};
 use spl_associated_token_account::get_associated_token_address_with_program_id;
 
 use crate::TestResult;
