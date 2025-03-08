@@ -7,7 +7,9 @@ use solana_sdk::account::Account;
 
 use super::{test_fixtures_dir, KeyedUiAccount};
 
-// use crate::{default_rent_exempt_lamports, load_program_so, test_fixtures_dir, KeyedUiAccount};
+pub trait IntoAccount {
+    fn into_account(self) -> Account;
+}
 
 /// For nice method syntax on [`ProgramTest`]
 pub trait ExtendedProgramTest {

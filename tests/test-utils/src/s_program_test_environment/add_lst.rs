@@ -4,7 +4,6 @@ use s_controller_lib::{
     FindLstPdaAtaKeys,
 };
 use solana_sdk::{pubkey::Pubkey, signer::Signer, system_program};
-use spl_associated_token_account::ID;
 
 use crate::TestResult;
 
@@ -41,7 +40,7 @@ impl SProgramTestEnvironment {
             sol_value_calculator: sol_value_calculator_pubkey,
             pool_state: self.get_pool_state_pubkey(),
             lst_state_list: self.get_lst_state_list_pubkey(),
-            associated_token_program: ID,
+            associated_token_program: spl_associated_token_account::ID,
             system_program: system_program::ID,
             lst_token_program,
         })?;

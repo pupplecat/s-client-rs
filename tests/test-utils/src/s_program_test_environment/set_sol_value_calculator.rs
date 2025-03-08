@@ -1,9 +1,11 @@
+use marinade_calculator_lib::marinade_sol_val_calc_account_metas;
 use s_controller_interface::{
-    set_sol_value_calculator_ix, SetPricingProgramKeys, SetSolValueCalculatorIxArgs,
-    SetSolValueCalculatorKeys,
+    set_sol_value_calculator_ix, SetSolValueCalculatorIxArgs, SetSolValueCalculatorKeys,
 };
-use s_controller_lib::{find_pool_reserves_address, FindLstPdaAtaKeys};
-use solana_sdk::{pubkey::Pubkey, signer::Signer};
+use s_controller_lib::{
+    find_pool_reserves_address, ix_extend_with_sol_value_calculator_accounts, FindLstPdaAtaKeys,
+};
+use solana_sdk::pubkey::Pubkey;
 
 use crate::{utils::try_find_lst_state_index, TestResult};
 
@@ -22,7 +24,7 @@ impl SProgramTestEnvironment {
         let (lst_index, _) =
             try_find_lst_state_index(&lst_state_list.unwrap_or_default(), lst_mint_pubkey)?;
 
-        let set_sol_value_calculator_instruction = set_sol_value_calculator_ix(
+        let mut set_sol_value_calculator_instruction = set_sol_value_calculator_ix(
             SetSolValueCalculatorKeys {
                 admin: pool_state.admin,
                 lst_mint: lst_mint_pubkey,
@@ -33,6 +35,12 @@ impl SProgramTestEnvironment {
             SetSolValueCalculatorIxArgs {
                 lst_index: lst_index as u32,
             },
+        )?;
+
+        ix_extend_with_sol_value_calculator_accounts(
+            &mut set_sol_value_calculator_instruction,
+            &marinade_sol_val_calc_account_metas(),
+            marinade_calculator_lib::program::ID,
         )?;
 
         self.process_instruction(

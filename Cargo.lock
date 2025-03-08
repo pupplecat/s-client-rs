@@ -3614,6 +3614,7 @@ version = "0.1.0"
 dependencies = [
  "flat-fee-lib",
  "lido-keys",
+ "marinade-calculator-lib",
  "marinade-keys",
  "no-fee-pricing-program",
  "s-controller-lib",
@@ -5752,6 +5753,7 @@ dependencies = [
  "cargo_metadata",
  "flat-fee",
  "flat-fee-lib",
+ "generic-pool-calculator-lib",
  "lido-calculator",
  "lido-calculator-lib",
  "lido-keys",

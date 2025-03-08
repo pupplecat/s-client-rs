@@ -33,6 +33,7 @@ lido-keys = { workspace = true }
 no-fee-pricing-program = { workspace = true, features = ["testing"] }
 wsol-calculator-lib = { workspace = true }
 wsol-keys = { workspace = true }
+generic-pool-calculator-lib = { workspace = true }
 
 cargo_metadata = "0.19.1"
 async-trait = { workspace = true }

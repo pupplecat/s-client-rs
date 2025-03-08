@@ -32,6 +32,7 @@ pub struct SProgramTestEnvironment {
     pub payer: Keypair,
     pub authority: Keypair,
     pub rebalance_authority: Keypair,
+    pub protocol_fee_beneficiary: Keypair,
     pub lp_mint: Pubkey,
 }
 
@@ -216,6 +217,7 @@ pub async fn setup_s_program_test_environment() -> SProgramTestEnvironment {
         payer,
         authority: authority.insecure_clone(),
         rebalance_authority: authority.insecure_clone(),
+        protocol_fee_beneficiary: authority.insecure_clone(),
         lp_mint,
     }
 }
