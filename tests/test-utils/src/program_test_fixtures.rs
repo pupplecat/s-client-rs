@@ -4,7 +4,7 @@ use solana_sdk::{
     program_pack::Pack, pubkey::Pubkey, rent::Rent, signature::Keypair, signer::Signer,
     system_instruction::create_account,
 };
-use spl_token::instruction::initialize_mint;
+use spl_token::{instruction::initialize_mint, state::Account};
 
 use crate::program_test::{
     FlatFeeProgramTest, LidoCalculatorProgramTest, MarinadeCalculatorProgramTest,
@@ -95,5 +95,17 @@ impl ProgramTestFixtures {
             .await?;
 
         Ok(mint_keypair.pubkey())
+    }
+
+    pub async fn balance_of_token_account(
+        &mut self,
+        token_account: &Pubkey,
+    ) -> Result<u64, BanksClientError> {
+        let token_account: Account = self
+            .program_simulator
+            .get_packed_account_data(*token_account)
+            .await?;
+
+        Ok(token_account.amount)
     }
 }

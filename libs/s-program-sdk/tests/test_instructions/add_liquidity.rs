@@ -51,7 +51,7 @@ async fn setup() -> (SProgramTestEnvironment, Keypair) {
         program_test.gen_and_add_token_account(MockTokenAccountArgs {
             mint: lp_token_mint,
             authority: liquidity_provider.pubkey(),
-            amount: 0,
+            amount: MSOL_TO_ADD,
         });
 
     let env = setup_s_program_test_environment_with_program_test(program_test).await;
@@ -72,9 +72,6 @@ async fn test_add_liquidity() -> TestResult {
     let (mut env, liquidity_provider) = setup().await;
 
     let lst_mint_pubkey = msol::ID;
-
-    env.add_lst(lst_mint_pubkey, spl_calculator_lib::program::ID)
-        .await?;
 
     env.add_liquidity(lst_mint_pubkey, MSOL_TO_ADD, liquidity_provider)
         .await?;
