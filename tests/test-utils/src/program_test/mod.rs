@@ -7,6 +7,7 @@ mod s_controller_program;
 mod spl_calculator_program;
 mod state;
 mod token;
+mod wsol_calculator_program;
 
 pub use flat_fee_program::*;
 pub use lido_calculator_program::*;
@@ -17,3 +18,4 @@ pub use s_controller_program::*;
 pub use spl_calculator_program::*;
 pub use state::*;
 pub use token::*;
+pub use wsol_calculator_program::*;

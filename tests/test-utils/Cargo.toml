@@ -22,6 +22,7 @@ s-controller-lib = { workspace = true, features = ["testing"] }
 s_controller_interface = { workspace = true }
 flat-fee = { workspace = true }
 flat-fee-lib = { workspace = true, features = ["testing"] }
+flat_fee_interface = { workspace = true }
 spl-calculator = { workspace = true }
 spl-calculator-lib = { workspace = true }
 marinade-calculator = { workspace = true }
@@ -31,6 +32,7 @@ lido-calculator = { workspace = true }
 lido-calculator-lib = { workspace = true }
 lido-keys = { workspace = true }
 no-fee-pricing-program = { workspace = true, features = ["testing"] }
+wsol-calculator = { workspace = true }
 wsol-calculator-lib = { workspace = true }
 wsol-keys = { workspace = true }
 generic-pool-calculator-lib = { workspace = true }

@@ -45,7 +45,7 @@ impl SProgramTestEnvironment {
             token_program: lst_token_program,
         });
 
-        let add_liquidity = add_liquidity_ix(
+        let add_liquidity_instruction = add_liquidity_ix(
             AddLiquidityKeys {
                 signer: signer.pubkey(),
                 lst_mint: lst_mint_pubkey,
@@ -66,6 +66,9 @@ impl SProgramTestEnvironment {
                 min_lp_out: 0,
             },
         )?;
+
+        self.process_instruction(add_liquidity_instruction, &vec![&signer], None)
+            .await?;
 
         Ok(())
     }

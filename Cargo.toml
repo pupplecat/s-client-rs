@@ -69,6 +69,7 @@ s-controller-lib = { git = "https://github.com/moose-labs/S", branch = "custom_a
 s_controller_interface = { git = "https://github.com/moose-labs/S", branch = "custom_address" }
 flat-fee = { git = "https://github.com/moose-labs/S", branch = "custom_address" }
 flat-fee-lib = { git = "https://github.com/moose-labs/S", branch = "custom_address" }
+flat_fee_interface = { git = "https://github.com/moose-labs/S", branch = "custom_address" }
 spl-calculator = { git = "https://github.com/moose-labs/S", branch = "custom_address" }
 spl-calculator-lib = { git = "https://github.com/moose-labs/S", branch = "custom_address" }
 marinade-calculator = { git = "https://github.com/moose-labs/S", branch = "custom_address" }
@@ -83,4 +84,5 @@ sanctum-spl-multi-stake-pool-keys = { git = "https://github.com/moose-labs/S", b
 spl-stake-pool-keys = { git = "https://github.com/moose-labs/S", branch = "custom_address" }
 wsol-keys = { git = "https://github.com/moose-labs/S", branch = "custom_address" }
 sanctum-spl-stake-pool-keys = { git = "https://github.com/moose-labs/S", branch = "custom_address" }
+wsol-calculator = { git = "https://github.com/moose-labs/S", branch = "custom_address" }
 wsol-calculator-lib = { git = "https://github.com/moose-labs/S", branch = "custom_address" }

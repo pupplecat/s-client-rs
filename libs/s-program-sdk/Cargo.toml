@@ -10,6 +10,7 @@ name = "s_program_sdk"
 [dependencies]
 solana-program = { workspace = true }
 s_controller_interface = { workspace = true }
+flat_fee_interface = { workspace = true }
 
 [dev-dependencies]
 solana-program-test = { workspace = true }
@@ -28,3 +29,5 @@ marinade-calculator-lib = { workspace = true }
 marinade-keys = { workspace = true }
 lido-keys = { workspace = true }
 wsol-keys = { workspace = true }
+wsol-calculator-lib = { workspace = true }
+lido-calculator-lib = { workspace = true }

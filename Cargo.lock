@@ -531,7 +531,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "115e54d64eb62cdebad391c19efc9dce4981c690c85a33a12199d99bb9546fee"
 dependencies = [
  "borsh-derive 0.10.4",
- "hashbrown 0.12.3",
+ "hashbrown 0.13.2",
 ]
 
 [[package]]
@@ -3613,6 +3613,8 @@ name = "s-program-sdk"
 version = "0.1.0"
 dependencies = [
  "flat-fee-lib",
+ "flat_fee_interface",
+ "lido-calculator-lib",
  "lido-keys",
  "marinade-calculator-lib",
  "marinade-keys",
@@ -3627,6 +3629,7 @@ dependencies = [
  "spl-token",
  "test-utils",
  "tokio",
+ "wsol-calculator-lib",
  "wsol-keys",
 ]
 
@@ -5756,6 +5759,7 @@ dependencies = [
  "cargo_metadata",
  "flat-fee",
  "flat-fee-lib",
+ "flat_fee_interface",
  "generic-pool-calculator-lib",
  "lido-calculator",
  "lido-calculator-lib",
@@ -5780,6 +5784,7 @@ dependencies = [
  "spl-calculator",
  "spl-calculator-lib",
  "spl-token",
+ "wsol-calculator",
  "wsol-calculator-lib",
  "wsol-keys",
 ]
@@ -6461,7 +6466,7 @@ version = "0.1.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "cf221c93e13a30d793f7645a0e7762c55d169dbb0a49671918a2319d289b10bb"
 dependencies = [
- "windows-sys 0.52.0",
+ "windows-sys 0.48.0",
 ]
 
 [[package]]
@@ -6681,6 +6686,19 @@ name = "writeable"
 version = "0.5.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1e9df38ee2d2c3c5948ea468a8406ff0db0b29ae1ffde1bcf20ef305bcc95c51"
+
+[[package]]
+name = "wsol-calculator"
+version = "1.0.0"
+source = "git+https://github.com/moose-labs/S?branch=custom_address#f3aa6574a83fff1e84fdeb4592cbc1840d7ce654"
+dependencies = [
+ "ahash 0.8.11",
+ "sanctum-misc-utils",
+ "sol-value-calculator-onchain",
+ "solana-program",
+ "wsol-calculator-lib",
+ "wsol_calculator_interface",
+]
 
 [[package]]
 name = "wsol-calculator-lib"
