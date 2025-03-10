@@ -15,3 +15,4 @@ mod set_protocol_fee;
 mod set_protocol_fee_beneficiary;
 mod set_rebalance_authority;
 mod set_sol_value_calculator;
+mod rebalance;

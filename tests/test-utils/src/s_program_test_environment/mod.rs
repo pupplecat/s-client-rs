@@ -6,6 +6,7 @@ mod disable_pool;
 mod enable_lst_input;
 mod enable_pool;
 mod initialize;
+mod rebalance;
 mod remove_disable_pool_authority;
 mod remove_liquidity;
 mod remove_lst;

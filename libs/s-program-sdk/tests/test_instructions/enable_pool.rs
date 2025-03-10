@@ -1,6 +1,5 @@
 use s_controller_interface::PoolState;
 use solana_program_test::ProgramTest;
-use solana_sdk::{signature::Keypair, signer::Signer};
 use test_utils::{
     program_test::{PoolStateProgramTest, SControllerProgramTest, DEFAULT_POOL_STATE},
     setup_s_program_test_environment_with_program_test, SProgramTestEnvironment, TestResult,
