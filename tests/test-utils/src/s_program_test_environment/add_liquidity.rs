@@ -1,10 +1,10 @@
-use s_controller_interface::{add_liquidity_ix, AddLiquidityIxArgs, AddLiquidityKeys};
+use marinade_calculator_lib::marinade_sol_val_calc_account_metas;
+use marinade_keys::msol;
+use s_controller_interface::AddLiquidityKeys;
 use s_controller_lib::{
     add_liquidity_ix_full, find_pool_reserves_address, find_protocol_fee_accumulator_address,
-    AddLiquidityByMintFreeArgs, AddLiquidityIxAmts, AddLiquidityIxFullArgs,
-    AddRemoveLiquidityExtraAccounts, FindLstPdaAtaKeys,
+    AddLiquidityIxAmts, AddLiquidityIxFullArgs, AddRemoveLiquidityExtraAccounts, FindLstPdaAtaKeys,
 };
-use solana_readonly_account::sdk::KeyedAccount;
 use solana_sdk::{instruction::AccountMeta, pubkey::Pubkey, signature::Keypair, signer::Signer};
 use spl_associated_token_account::get_associated_token_address_with_program_id;
 
@@ -87,42 +87,42 @@ impl SProgramTestEnvironment {
         lst_amount: u64,
         liquidity_provider: Keypair,
     ) -> TestResult {
+        println!("xxx 1");
         let pool_state = self.get_pool_state().await?;
         let lst_token_program = self.get_mint_token_program(lst_mint_pubkey).await?;
         let lp_token_program = self
             .get_mint_token_program(pool_state.lp_token_mint)
             .await?;
-
+        println!("xxx 2");
         let src_lst_acc = get_associated_token_address_with_program_id(
             &liquidity_provider.pubkey(),
             &lst_mint_pubkey,
             &lst_token_program,
         );
-
+        println!("xxx src_lst_acc {}", src_lst_acc);
+        println!("xxx 3");
         let dst_lp_acc = get_associated_token_address_with_program_id(
             &liquidity_provider.pubkey(),
             &pool_state.lp_token_mint,
             &lp_token_program,
         );
-
+        println!("xxx dst_lp_acc {}", dst_lp_acc);
+        println!("xxx 4");
         let (protocol_fee_accumulator_pubkey, _) =
             find_protocol_fee_accumulator_address(FindLstPdaAtaKeys {
                 lst_mint: lst_mint_pubkey,
                 token_program: lst_token_program,
             });
-
+        println!("xxx 4");
         let (pool_reserves_pubkey, _) = find_pool_reserves_address(FindLstPdaAtaKeys {
             lst_mint: lst_mint_pubkey,
             token_program: lst_token_program,
         });
         let lst_state_list = self.get_lst_state_list().await?.unwrap_or_default();
         let (lst_index, _) = try_find_lst_state_index(&lst_state_list, lst_mint_pubkey)?;
+        println!("xxx 5");
 
-        let lst_account_starting_balance = {
-            let test_fixtures = self.test_fixtures.lock().unwrap();
-            test_fixtures.balance_of_token_account(&src_lst_acc).await?
-        };
-
+        println!("xxx add_liquidity_keys");
         let add_liquidity_keys = AddLiquidityKeys {
             signer: liquidity_provider.pubkey(),
             lst_mint: lst_mint_pubkey,
@@ -136,35 +136,28 @@ impl SProgramTestEnvironment {
             lst_state_list: self.get_lst_state_list_pubkey(),
             pool_reserves: pool_reserves_pubkey,
         };
-
+        println!("xxx add_liquidity_instruction");
         let add_liquidity_instruction = add_liquidity_ix_full(
             add_liquidity_keys,
             AddLiquidityIxFullArgs {
                 lst_index,
                 amts: AddLiquidityIxAmts {
-                    lst_amount: lst_account_starting_balance,
+                    lst_amount: lst_amount,
                     min_lp_out: 0,
                 },
             },
             AddRemoveLiquidityExtraAccounts {
                 lst_calculator_program_id: marinade_calculator_lib::program::ID,
                 pricing_program_id: no_fee_pricing_program::ID,
-                lst_calculator_accounts: &SplLstSolCommonFreeArgsConst {
-                    spl_stake_pool: KeyedAccount {
-                        pubkey: jito_stake_pool::ID,
-                        account: jito_stake_pool_acc,
-                    },
-                }
-                .resolve_spl_to_account_metas()
-                .unwrap(),
+                lst_calculator_accounts: &marinade_sol_val_calc_account_metas(),
                 pricing_program_price_lp_accounts: &[AccountMeta {
-                    pubkey: jitosol::id(),
+                    pubkey: msol::ID,
                     is_signer: false,
                     is_writable: false,
                 }],
             },
         )?;
-
+        println!("xxx process_instruction");
         self.process_instruction(add_liquidity_instruction, &vec![&liquidity_provider], None)
             .await?;
 

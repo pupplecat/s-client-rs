@@ -1,16 +1,9 @@
 use marinade_keys::msol;
-use s_controller_lib::{
-    find_pool_reserves_address, find_protocol_fee_accumulator_address, FindLstPdaAtaKeys,
-};
-use solana_program_test::ProgramTest;
 use solana_sdk::{pubkey::Pubkey, signature::Keypair, signer::Signer};
 use test_utils::{
-    program_test::{
-        GenAndAddTokenAccountProgramTest, MarinadeCalculatorProgramTest, PoolStateProgramTest,
-        SControllerProgramTest, SplCalculatorProgramTest, DEFAULT_POOL_STATE,
-    },
+    program_test::{GenAndAddTokenAccountProgramTest, SControllerProgramTest},
     setup_s_program_test_environment_with_program_test,
-    utils::{jitosol, MockTokenAccountArgs, JITO_STAKE_POOL_LAST_UPDATE_EPOCH},
+    utils::{jitosol, MockTokenAccountAtaArgs, JITO_STAKE_POOL_LAST_UPDATE_EPOCH},
     SProgramTestEnvironment, TestResult,
 };
 
@@ -35,24 +28,24 @@ async fn setup() -> (SProgramTestEnvironment, Keypair) {
     })
     .add_s_controller_program();
 
-    let liquidity_provider_jitosol_acc_addr =
-        program_test.gen_and_add_token_account(MockTokenAccountArgs {
-            mint: jitosol::id(),
-            authority: liquidity_provider.pubkey(),
-            amount: JITOSOL_TO_ADD,
-        });
-    let liquidity_provider_msol_acc_addr =
-        program_test.gen_and_add_token_account(MockTokenAccountArgs {
-            mint: msol::ID,
-            authority: liquidity_provider.pubkey(),
-            amount: MSOL_TO_ADD,
-        });
-    let liquidity_provider_lp_token_acc_addr =
-        program_test.gen_and_add_token_account(MockTokenAccountArgs {
-            mint: lp_token_mint,
-            authority: liquidity_provider.pubkey(),
-            amount: MSOL_TO_ADD,
-        });
+    program_test.gen_ata_and_add_token_account(MockTokenAccountAtaArgs {
+        mint: jitosol::id(),
+        authority: liquidity_provider.pubkey(),
+        amount: JITOSOL_TO_ADD,
+        token_program_id: spl_token::ID,
+    });
+    program_test.gen_ata_and_add_token_account(MockTokenAccountAtaArgs {
+        mint: msol::ID,
+        authority: liquidity_provider.pubkey(),
+        amount: MSOL_TO_ADD,
+        token_program_id: spl_token::ID,
+    });
+    program_test.gen_ata_and_add_token_account(MockTokenAccountAtaArgs {
+        mint: lp_token_mint,
+        authority: liquidity_provider.pubkey(),
+        amount: MSOL_TO_ADD,
+        token_program_id: spl_token::ID,
+    });
 
     let env = setup_s_program_test_environment_with_program_test(program_test).await;
 

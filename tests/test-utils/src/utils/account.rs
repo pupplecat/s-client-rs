@@ -24,6 +24,14 @@ pub struct MockTokenAccountArgs {
 }
 
 #[derive(Clone, Copy, Debug)]
+pub struct MockTokenAccountAtaArgs {
+    pub mint: Pubkey,
+    pub authority: Pubkey,
+    pub amount: u64,
+    pub token_program_id: Pubkey,
+}
+
+#[derive(Clone, Copy, Debug)]
 pub struct MockMintArgs {
     pub mint_authority: Option<Pubkey>,
     pub freeze_authority: Option<Pubkey>,
