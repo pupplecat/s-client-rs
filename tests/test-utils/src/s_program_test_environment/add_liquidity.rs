@@ -8,10 +8,7 @@ use s_controller_lib::{
 use solana_sdk::{instruction::AccountMeta, pubkey::Pubkey, signature::Keypair, signer::Signer};
 use spl_associated_token_account::get_associated_token_address_with_program_id;
 
-use crate::{
-    utils::{jitosol, try_find_lst_state_index},
-    TestResult,
-};
+use crate::{utils::try_find_lst_state_index, TestResult};
 
 use super::SProgramTestEnvironment;
 
@@ -87,42 +84,37 @@ impl SProgramTestEnvironment {
         lst_amount: u64,
         liquidity_provider: Keypair,
     ) -> TestResult {
-        println!("xxx 1");
         let pool_state = self.get_pool_state().await?;
         let lst_token_program = self.get_mint_token_program(lst_mint_pubkey).await?;
         let lp_token_program = self
             .get_mint_token_program(pool_state.lp_token_mint)
             .await?;
-        println!("xxx 2");
+
         let src_lst_acc = get_associated_token_address_with_program_id(
             &liquidity_provider.pubkey(),
             &lst_mint_pubkey,
             &lst_token_program,
         );
-        println!("xxx src_lst_acc {}", src_lst_acc);
-        println!("xxx 3");
+
         let dst_lp_acc = get_associated_token_address_with_program_id(
             &liquidity_provider.pubkey(),
             &pool_state.lp_token_mint,
             &lp_token_program,
         );
-        println!("xxx dst_lp_acc {}", dst_lp_acc);
-        println!("xxx 4");
+
         let (protocol_fee_accumulator_pubkey, _) =
             find_protocol_fee_accumulator_address(FindLstPdaAtaKeys {
                 lst_mint: lst_mint_pubkey,
                 token_program: lst_token_program,
             });
-        println!("xxx 4");
+
         let (pool_reserves_pubkey, _) = find_pool_reserves_address(FindLstPdaAtaKeys {
             lst_mint: lst_mint_pubkey,
             token_program: lst_token_program,
         });
         let lst_state_list = self.get_lst_state_list().await?.unwrap_or_default();
         let (lst_index, _) = try_find_lst_state_index(&lst_state_list, lst_mint_pubkey)?;
-        println!("xxx 5");
 
-        println!("xxx add_liquidity_keys");
         let add_liquidity_keys = AddLiquidityKeys {
             signer: liquidity_provider.pubkey(),
             lst_mint: lst_mint_pubkey,
@@ -136,7 +128,7 @@ impl SProgramTestEnvironment {
             lst_state_list: self.get_lst_state_list_pubkey(),
             pool_reserves: pool_reserves_pubkey,
         };
-        println!("xxx add_liquidity_instruction");
+
         let add_liquidity_instruction = add_liquidity_ix_full(
             add_liquidity_keys,
             AddLiquidityIxFullArgs {
@@ -157,7 +149,7 @@ impl SProgramTestEnvironment {
                 }],
             },
         )?;
-        println!("xxx process_instruction");
+
         self.process_instruction(add_liquidity_instruction, &vec![&liquidity_provider], None)
             .await?;
 

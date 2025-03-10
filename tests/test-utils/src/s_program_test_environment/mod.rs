@@ -1,8 +1,13 @@
 mod add_disable_pool_authority;
 mod add_liquidity;
 mod add_lst;
+mod disable_lst_input;
+mod disable_pool;
+mod enable_lst_input;
+mod enable_pool;
 mod initialize;
 mod remove_disable_pool_authority;
+mod remove_liquidity;
 mod remove_lst;
 mod set_admin;
 mod set_pricing_program;

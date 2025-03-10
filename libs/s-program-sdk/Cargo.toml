@@ -12,10 +12,12 @@ solana-program = { workspace = true }
 s_controller_interface = { workspace = true }
 flat_fee_interface = { workspace = true }
 
+
 [dev-dependencies]
 solana-program-test = { workspace = true }
 program-simulator = { workspace = true }
 spl-token = { workspace = true }
+spl-associated-token-account = { workspace = true }
 
 tokio = { version = "1.40.0", features = ["rt-multi-thread", "macros"] }
 test-utils = { workspace = true }

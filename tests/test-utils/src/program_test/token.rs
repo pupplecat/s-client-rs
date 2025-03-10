@@ -61,8 +61,8 @@ impl GenAndAddTokenAccountProgramTest for ProgramTest {
         );
 
         let token_acc = mock_tokenkeg_account(MockTokenAccountArgs {
-            mint: args.authority,
-            authority: args.mint,
+            mint: args.mint,
+            authority: args.authority,
             amount: args.amount,
         });
         self.add_account(addr, token_acc.into_account());
